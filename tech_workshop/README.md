@@ -583,3 +583,126 @@ We also now need to learn some terminology:
 * We are now going to package the app so you could promote to production or send to someone. 
 
 * First, we reload the customizations, this allows us to bundle workflows and rules or datatables as part of our package.
+
+---
+
+## Step 22: *Create RDAP Query Package*
+
+* Create the Message Destination:
+  ```
+  fn_who_is_rdap
+  ```
+* Set the User/API Key to the Email/API Key in your `app.config` file
+  ![screenshot](./screenshots/whois_1.png)
+
+* Create the Function:
+  ![screenshot](./screenshots/whois_2.png)
+  ```
+  Name: RDAP Query
+  Message Destination: fn_who_is_rdap
+  ```
+* Add inputs to Function:
+  ```
+  Input 1:
+    Name: rdap_query
+    Type: Text
+
+  Input 2:
+    Name: rdap_depth
+    Type: Number
+  ```
+  ![screenshot](./screenshots/whois_3.png)
+  ![screenshot](./screenshots/whois_4.png)
+
+* Create the Workflow
+  ```
+  Name: RDAP Query
+  Object Type: Artifact
+  ```
+  ![screenshot](./screenshots/whois_5.png)
+* Drag in the **RDAP Query Function**
+* Add Start + **End Nodes**
+* **Join** them all with connections like the screenshot
+* Open the Function's **pre-processing** script and paste the following:
+  ```python
+  inputs.rdap_query = artifact.value
+  inputs.rdap_depth = 0
+  ```
+* Open the Function's **post-processing** script and paste the following:
+  ```python
+  try:
+    des = artifact.description.content
+  except Exception:
+    des = None
+
+  if results["success"]:
+    if des is None:
+      note = u"""<div><p><br><b>RDAP threat intelligence at {2}:</b></br>\n\n
+      <br><b>{0}</b></br></div></p>\n\n
+      <div><p><br><b> Possible accessible keys:</b></br>\n\n
+      <br><b>{1}</b></br>\n\n""".format(results["content"]["display_content"],results["content"].keys(),results["metrics"]["timestamp"])
+      artifact.description = helper.createRichText(note)
+    else:
+      note =des +u"""<div><p><br><b>RDAP threat intelligence at {2}:</b></br>\n\n
+      <br><b>{0}</b></br></div></p>\n\n
+      <div><p><br><b> Possible accessible keys:</b></br>\n\n
+      <br><b>{1}</b></br>\n\n""".format(results["content"]["display_content"],results["content"].keys(),results["metrics"]["timestamp"])
+      artifact.description = helper.createRichText(note)
+  else:
+    note = u"""RDAP threat intelligence at {}:\n\n  This Artifact has no ans registry information, \n\n so no intelligence was gathered.  \n\n""".format(results["metrics"]["timestamp"])
+    artifact.description = helper.createRichText(note)
+  ```
+* **Save and Close** the Workflow
+* Create a new **Menu Item** Rule
+  ![screenshot](./screenshots/whois_6.png)
+  ```
+  Name: RDAP Query
+  Object Type: Artifact
+  Workflow: RDAP Query
+  ```
+  ![screenshot](./screenshots/whois_7.png)
+* Open **Terminal** and make a new `my_dev` directory
+  ```
+  $ cd ~
+  $ mkdir my_dev
+  ```
+* Create **Integration Package**:
+  ```
+  $ resilient-circuits codegen -p fn_who_is_rdap -m "fn_who_is_rdap" --rule "RDAP Query"
+  ```
+* Change into created **Directory**:
+  ```
+  $ cd cd fn_who_is_rdap
+  ```
+* Install in **development mode**:
+  ```
+  $ python setup.py develop
+  ```
+* **Run** resilient-circuits:
+  ```
+  $ resilient-circuits run
+  ```
+* Create new **test** Incident and add the Artifact:
+  ```
+  Type: IP Address
+  Value: 129.42.34.0
+  ```
+  ![screenshot](./screenshots/whois_8.png)
+
+* **Run** your new Rule:
+  ![screenshot](./screenshots/whois_9.png)
+
+* Check output of `resilient-circuits`
+
+## Step 23: *Install ipwhois*
+* Open **Terminal**
+* Install ipwhois dependency
+  ```
+  $ pip install ipwhois
+  ```
+
+## Step 24: *Build RDAP Query Code*
+* Open VS Code
+* Open the `my_dev` directory
+* You will see the folder structure of a `package`
+* Open the function under the `components` directory
