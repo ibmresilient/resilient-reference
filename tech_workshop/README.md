@@ -562,6 +562,9 @@ We also now need to learn some terminology:
 
 ## Step 21: *Testing the function*
 
+* We now need to install the function, cd into the fn_first_function directory then run
+  `pip install -e .`
+
 * Lets test our workflow and function code, go to the terminal and start `resilient-circuits` you are looking for the first function connections in the list. This means everything is ready. 
   ![screenshot](./screenshots/119.png)
 
