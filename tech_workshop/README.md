@@ -563,7 +563,7 @@ We also now need to learn some terminology:
 ## Step 21: *Testing the function*
 
 * We now need to install the function, cd into the fn_first_function directory then run
-  `pip install -e .`
+  `python setup.py develop`
 
 * Lets test our workflow and function code, go to the terminal and start `resilient-circuits` you are looking for the first function connections in the list. This means everything is ready. 
   ![screenshot](./screenshots/119.png)
@@ -630,27 +630,31 @@ We also now need to learn some terminology:
   ```
 * Open the Function's **post-processing** script and paste the following:
   ```python
+  # Helper to append to Artifact Description
   try:
     des = artifact.description.content
   except Exception:
-    des = None
+    des = u"RDAP Lookup Results:\n"
 
-  if results["success"]:
-    if des is None:
-      note = u"""<div><p><br><b>RDAP threat intelligence at {2}:</b></br>\n\n
-      <br><b>{0}</b></br></div></p>\n\n
-      <div><p><br><b> Possible accessible keys:</b></br>\n\n
-      <br><b>{1}</b></br>\n\n""".format(results["content"]["display_content"],results["content"].keys(),results["metrics"]["timestamp"])
-      artifact.description = helper.createRichText(note)
-    else:
-      note =des +u"""<div><p><br><b>RDAP threat intelligence at {2}:</b></br>\n\n
-      <br><b>{0}</b></br></div></p>\n\n
-      <div><p><br><b> Possible accessible keys:</b></br>\n\n
-      <br><b>{1}</b></br>\n\n""".format(results["content"]["display_content"],results["content"].keys(),results["metrics"]["timestamp"])
-      artifact.description = helper.createRichText(note)
-  else:
-    note = u"""RDAP threat intelligence at {}:\n\n  This Artifact has no ans registry information, \n\n so no intelligence was gathered.  \n\n""".format(results["metrics"]["timestamp"])
-    artifact.description = helper.createRichText(note)
+  if results.get("success"):
+    
+    results_contents = results.get("content", {})
+    d = results_contents.get("objects", {})
+    
+    for k in d:
+      o = d[k]
+      entity_name = o.get("contact", {}).get("name")
+      entity_address = o.get("contact", {}).get("address")[0].get("value")
+      entity = u"Name: {0}\nAddress: {1}".format(entity_name, entity_address)
+      des = u"{0}\n{1}".format(des, entity)
+      
+    artifact.description = des
+
+    note_text = u"""RDAP Lookup ran on Artifact: <b>{0}</b>
+                    <br><b>Name:</b> {1}
+                    <br><b>Address:</b> {2}""".format(artifact.value, entity_name, entity_address)
+    
+    incident.addNote(helper.createRichText(note_text))
   ```
 * **Save and Close** the Workflow
 * Create a new **Menu Item** Rule
@@ -700,9 +704,172 @@ We also now need to learn some terminology:
   ```
   $ pip install ipwhois
   ```
+  > **Note:** found on https://pypi.org/project/ipwhois/
 
-## Step 24: *Build RDAP Query Code*
+
+## Step 24: *Install resilient-lib*
+* Open **Terminal**
+* Install resilient-lib dependency
+  ```
+  $ pip install resilient-lib
+  ```
+  > **Note:** found on https://pypi.org/project/resilient-lib/
+
+## Step 25: *Setup for Building RDAP Query Code*
 * Open VS Code
 * Open the `my_dev` directory
 * You will see the folder structure of a `package`
 * Open the function under the `components` directory
+  ![screenshot](./screenshots/whois_10.png)
+* We are going to edit this file to **build the logic** of or own RDAP Function
+* Docs for the IPWhois Library we use are here: https://ipwhois.readthedocs.io/en/latest/README.html#api
+
+## Step 26: *Build RDAP Query Code*
+1. **Line 7**: Import resilient-lib:
+   ```python
+   from resilient_lib import ResultPayload, validate_fields
+   ```
+
+2. **Line 8**: Import IPWhois:
+   ```python
+   from ipwhois import IPWhois
+   ```
+
+3. **Line 9**: Import JSON:
+   ```python
+   import json
+   ```
+
+4. **Line ~39**: Uncomment StatusMessages:
+    ```python
+    # PUT YOUR FUNCTION IMPLEMENTATION CODE HERE
+    yield StatusMessage("starting...")
+    yield StatusMessage("done...")
+    ```
+5. **Inbetween 'starting...' and 'done...'**: Validate Inputs:
+    ```python
+    yield StatusMessage("starting...")
+
+    validate_fields(["rdap_depth", "rdap_query"], kwargs)
+    
+    yield StatusMessage("done...")
+    ```
+6. **After above**: Instantiate Results Payload:
+    ```python
+    yield StatusMessage("starting...")
+
+    validate_fields(["rdap_depth", "rdap_query"], kwargs)
+    rp = ResultPayload("fn_who_is_rdap", **kwargs)
+
+    yield StatusMessage("done...")
+    ```
+7. **After above**: Instantiate IPWhois + Get RDAP response:
+    ```python
+    yield StatusMessage("starting...")
+
+    validate_fields(["rdap_depth", "rdap_query"], kwargs)
+
+    rp = ResultPayload("fn_who_is_rdap", **kwargs)
+
+    ip_whois = IPWhois(rdap_query)
+
+    response = ip_whois.lookup_rdap(depth=rdap_depth)
+    log.info("RDAP Response: %s", json.dumps(response, indent=4))
+
+    yield StatusMessage("done...")
+    ```
+8. **After above**: Build results
+    ```python
+    yield StatusMessage("starting...")
+
+    validate_fields(["rdap_depth", "rdap_query"], kwargs)
+
+    rp = ResultPayload("fn_who_is_rdap", **kwargs)
+
+    ip_whois = IPWhois(rdap_query)
+
+    response = ip_whois.lookup_rdap(depth=rdap_depth)
+    log.info("RDAP Response: %s", json.dumps(response, indent=4))
+
+    results = rp.done(success=True, content=response)
+    yield StatusMessage("done...")
+    ```
+9. **Line ~50**: **Remove** default `results` object
+    ```python
+    results = {
+        "value": "xyz"
+    }
+    ```
+10. **Save** with `CTRL+S`
+
+11. Full Function code:
+  ```python
+  # -*- coding: utf-8 -*-
+  # pragma pylint: disable=unused-argument, no-self-use
+  """Function implementation"""
+
+  import logging
+  from resilient_circuits import ResilientComponent, function, handler, StatusMessage, FunctionResult, FunctionError
+  from resilient_lib import ResultPayload, validate_fields
+  from ipwhois import IPWhois
+  import json
+
+  class FunctionComponent(ResilientComponent):
+      """Component that implements Resilient function 'rdap_query"""
+
+      def __init__(self, opts):
+          """constructor provides access to the configuration options"""
+          super(FunctionComponent, self).__init__(opts)
+          self.options = opts.get("fn_who_is_rdap", {})
+
+      @handler("reload")
+      def _reload(self, event, opts):
+          """Configuration options have changed, save new values"""
+          self.options = opts.get("fn_who_is_rdap", {})
+
+      @function("rdap_query")
+      def _rdap_query_function(self, event, *args, **kwargs):
+          """Function: Our custom function"""
+          try:
+              # Get the wf_instance_id of the workflow this Function was called in
+              wf_instance_id = event.message["workflow_instance"]["workflow_instance_id"]
+
+              # Get the function parameters:
+              rdap_query = kwargs.get("rdap_query")  # text
+              rdap_depth = kwargs.get("rdap_depth")  # number
+
+              log = logging.getLogger(__name__)
+              log.info("rdap_query: %s", rdap_query)
+              log.info("rdap_depth: %s", rdap_depth)
+
+              # PUT YOUR FUNCTION IMPLEMENTATION CODE HERE
+              yield StatusMessage("starting...")
+
+              validate_fields(["rdap_depth", "rdap_query"], kwargs)
+
+              rp = ResultPayload("fn_who_is_rdap", **kwargs)
+
+              ip_whois = IPWhois(rdap_query)
+
+              response = ip_whois.lookup_rdap(depth=rdap_depth)
+              log.info("RDAP Response: %s", json.dumps(response, indent=4))
+
+              results = rp.done(success=True, content=response)
+              yield StatusMessage("done...")
+
+              # Produce a FunctionResult with the results
+              yield FunctionResult(results)
+          except Exception:
+              yield FunctionError()
+  ```
+
+## Step 27: *Run RDAP Query*
+* Run `resilient-circuits`:
+  ```
+  $ resilient-circuits run
+  ```
+* Open the `Test` Incident
+* Run the **RDAP Query rule** on the `129.42.34.0` Artifact
+* Check `resilient-circuits` logs
+* Check that Note is added and Artifact Description is updated
+* Done ;)
