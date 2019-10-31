@@ -873,3 +873,34 @@ We also now need to learn some terminology:
 * Check `resilient-circuits` logs
 * Check that Note is added and Artifact Description is updated
 * Done ;)
+
+## Step 28: *Package RDAP*
+* Open the `setup.py` file
+* Fill out your **details** and add **dependencies** used:
+  ```python
+    name='fn_who_is_rdap',
+    version='1.0.0',
+    license='MIT',
+    author='John Smith',
+    author_email='john@example.com',
+    url='Example Inc.',
+    description="Resilient Circuits Components for 'fn_who_is_rdap'",
+    long_description="Resilient Circuits Components for 'fn_who_is_rdap'",
+    install_requires=[
+        'resilient_circuits>=30.0.0',
+        'resilient-lib>=34.0.0',
+        'ipwhois>=1.1.0'
+    ]
+  ```
+* Open the `/util/config.py` file
+* Here if you wanted to use **app.configs**, you would add them here
+* Change to root of package:
+  ```
+  $ cd fn_who_is_rdap
+  ```
+* **Package**:
+  ```
+  $ python setup.py sdist
+  ```
+* Open `/dist` directory
+* The `tar.gz` is your RDAP Query Package
