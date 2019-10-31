@@ -580,10 +580,6 @@ We also now need to learn some terminology:
 * Finally look at the description (you might have to reload the page) - you should have your name and then some lorem.
   ![screenshot](./screenshots/123.png)
 
-* We are now going to package the app so you could promote to production or send to someone. 
-
-* First, we reload the customizations, this allows us to bundle workflows and rules or datatables as part of our package.
-
 ---
 
 ## Step 22: *Create RDAP Query Package*
@@ -900,7 +896,7 @@ We also now need to learn some terminology:
   ```
 * **Package**:
   ```
-  $ python setup.py sdist
+  $ python setup.py sdist --formats=zip
   ```
 * Open `/dist` directory
-* The `tar.gz` is your RDAP Query Package
+* The `.zip` is your RDAP Query Package
