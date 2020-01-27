@@ -1030,7 +1030,7 @@
 * The `.zip` is your RDAP Query Package
 
 ---
-<!-- 
+
 # Quiz
 1. **What is the default location of file App Host configs are stored?**
 
@@ -1056,7 +1056,7 @@
 
     **C:** code ~/.resilient/logs/app.log
 
---- -->
+---
 
 ![screenshot](./screenshots/ending.png)
 
