@@ -60,7 +60,7 @@
   * `fn_ldap_utilities`
   * `Demo EDR App`
 
-<!-- TODO: add screenshot of this -->
+  ![screenshot](./screenshots/69.png)
 
 ---
 
