@@ -21,3 +21,31 @@
 ## Custom Apps
 
 * Click [here](./Custom%20Apps/) to access some custom app.zips that are used
+
+## Tips
+
+### Copy/Paste in SkyTap Terminal:
+
+* Copy:
+  ```
+  CTRL + SHIFT + C
+  ```
+
+* Paste:
+  ```
+  CTRL + SHIFT + V
+  ```
+
+### Copy/Paste in SkyTap FireFox Browser:
+
+* Copy:
+  ```
+  CTRL + C
+  ```
+
+* Paste:
+  ```
+  CTRL + V
+  ```
+
+---
