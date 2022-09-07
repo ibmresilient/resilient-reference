@@ -53,12 +53,12 @@
   ```
 ### Restart SOAR Service
 ```
-$ sudo systemctl restart resilient
+sudo systemctl restart resilient
 ```
 
 ### View SOAR Logs
 ```
-$ sudo tail -f /usr/share/co3/logs/client.log
+sudo tail -f /usr/share/co3/logs/client.log
 ```
 
 ### Playbook Designer
@@ -78,12 +78,12 @@ $ sudo tail -f /usr/share/co3/logs/client.log
 
 * Get Deployments:
   ```
-  $ sudo kubectl get deployments -L app.kubernetes.io/instance -A
+  sudo kubectl get deployments -L app.kubernetes.io/instance -A
   ```
 
 * Get Logs:
   ```
-  $ sudo kubectl logs deployment/<deployment_name> -f -n <namespace>
+  sudo kubectl logs deployment/<deployment_name> -f -n <namespace>
   ```
 
 ---
