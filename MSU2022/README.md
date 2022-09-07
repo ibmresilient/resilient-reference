@@ -65,12 +65,12 @@ $ sudo tail -f /usr/share/co3/logs/client.log
 
 * Get Deployments:
   ```
-  sudo kubectl get deployments -L app.kubernetes.io/instance -A
+  $ sudo kubectl get deployments -L app.kubernetes.io/instance -A
   ```
 
 * Get Logs:
   ```
-  sudo kubectl logs deployment/<deployment_name> -f -n <namespace>
+  $ sudo kubectl logs deployment/<deployment_name> -f -n <namespace>
   ```
 
 ---
