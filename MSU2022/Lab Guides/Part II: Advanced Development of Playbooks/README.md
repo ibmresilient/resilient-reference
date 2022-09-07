@@ -42,7 +42,7 @@
 
 * Login as `resadmin` with the password shared by your course leader
 
-* Open **FireFox** and log into **IBM Security QRadar SOAR**
+* Open **FireFox** and log into **IBM Security QRadar SOAR** with the password provided by the course leader
 
 
 ---
@@ -53,12 +53,13 @@
 * Go to **Administrator Settings** > **Apps**
 * Verify that **2** App Hosts are configured and running:
   * quay.io
-  * local.registry
+  * local
 * Verify that the following Apps are installed and deployed:
   * `fn_ioc_parser_v2`
   * `fn_task_utils`
-  * `fn_ldap_utilities`
+  * `SOAR LDAP Utilities`
   * `Demo EDR App`
+  * TODO: Custom LDAP App?
 
   ![screenshot](./screenshots/69.png)
 
@@ -205,7 +206,7 @@
 
   ![screenshot](./screenshots/20.png)
 
-* Upload the `25.03.22 - New Malware Warning.pdf` file which should be in the Home directory
+* Upload the `25.03.22 - New Malware Warning.pdf` file which should be in the Desktop/Assets directory
 
   ![screenshot](./screenshots/23.png)
 
@@ -263,7 +264,7 @@
 
   ![screenshot](./screenshots/29.png)
 
-* Add a **Local Script** to add the Function's results to a **Data Table**:
+* Add a **Local Script** called `Add EDR data into Data Table` to add the Function's results to a **Data Table**:
 
   ![screenshot](./screenshots/28.png)
 
@@ -305,7 +306,7 @@
     incident.addNote(results.get("reason", "Unknown Error"))
   ```
 
-* Add the **Script** to the **canvas**, **connect** it to the preceding Function, add an **End point**, **Save** then **Enable** the Playbook
+* Add the **Script** to the **canvas**, **connect** it to the preceding Function, add an **End point**, **Save** then **Enable** the Playbook:
 
   ![screenshot](./screenshots/30.png)
 
@@ -317,7 +318,7 @@
 
   ![screenshot](./screenshots/31.png)
 
-* Expand the **Incident Tabs** and open **Artifacts**
+* Expand the **Incident Tabs** menu and open the **Artifacts** tab
 * Find the `EDR Details` Data Table and drag it into the Artifacts Widget:
 
   ![screenshot](./screenshots/32.png)
@@ -410,7 +411,7 @@
 
   ![screenshot](./screenshots/36.png)
 
-* Connect another path of the **Condition** to the `EDR: Update Status` Function and click **Save**:
+* Connect another path of the **Condition** to the `EDR: Update Status` Function as a `Devices Found` path and click **Save**:
 
   ![screenshot](./screenshots/44.png)
 
@@ -499,7 +500,7 @@
 
   ![screenshot](./screenshots/49.png)
 
-* Open **Tasks** from the side panel and add the task `Upload and Parse IOCs from Report` to the **canvas**, found under the **Engage** phase:
+* Open **Tasks** from the side panel and add the task `Upload and Parse IOCs from Report` to the **canvas**, found under the **Initial** phase:
 
   ![screenshot](./screenshots/50.png)
 
@@ -558,7 +559,7 @@
 
   ![screenshot](./screenshots/56.png)
 
-* Open **Tasks** from the side panel and add the task `EDR: Contain Devices` to the **canvas**, found under the **Engage** phase:
+* Open **Tasks** from the side panel and add the task `EDR: Contain Devices` to the **canvas**, found under the **Respond** phase:
 
   ![screenshot](./screenshots/57.png)
 

@@ -61,6 +61,19 @@ $ sudo systemctl restart resilient
 $ sudo tail -f /usr/share/co3/logs/client.log
 ```
 
+### Playbook Designer
+
+* Zoom in:
+  ```
+  CTRL + SHIFT + +
+  ```
+
+* Zoom out:
+  ```
+  CTRL + -
+  ```
+
+  > **NOTE** this key mapping worked on MacOS, this may be different on your OS...
 ### AppHost Commands
 
 * Get Deployments:
