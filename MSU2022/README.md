@@ -23,8 +23,12 @@
 * Click [here](./Custom%20Apps/) to access some custom app.zips that are used
 
 ## Tips
-
-### Copy/Paste in SkyTap Terminal:
+- [Copy/Paste in SkyTap Terminal](#copypaste-in-skytap-terminal)
+- [Copy/Paste in SkyTap FireFox Browser](#copypaste-in-skytap-firefox-browser)
+- [Restart SOAR Service](#restart-soar-service)
+- [View SOAR Logs](#view-soar-logs)
+- [AppHost Commands](#apphost-commands)
+### Copy/Paste in SkyTap Terminal
 
 * Copy:
   ```
@@ -36,7 +40,7 @@
   CTRL + SHIFT + V
   ```
 
-### Copy/Paste in SkyTap FireFox Browser:
+### Copy/Paste in SkyTap FireFox Browser
 
 * Copy:
   ```
@@ -46,6 +50,27 @@
 * Paste:
   ```
   CTRL + V
+  ```
+### Restart SOAR Service
+```
+$ sudo systemctl restart resilient
+```
+
+### View SOAR Logs
+```
+$ sudo tail -f /usr/share/co3/logs/client.log
+```
+
+### AppHost Commands
+
+* Get Deployments:
+  ```
+  sudo kubectl get deployments -L app.kubernetes.io/instance -A
+  ```
+
+* Get Logs:
+  ```
+  sudo kubectl logs deployment/<deployment_name> -f -n <namespace>
   ```
 
 ---
