@@ -27,7 +27,8 @@
 - [Copy/Paste in SkyTap FireFox Browser](#copypaste-in-skytap-firefox-browser)
 - [Restart SOAR Service](#restart-soar-service)
 - [View SOAR Logs](#view-soar-logs)
-- [AppHost Commands](#apphost-commands)
+- [Playbook Designer](#playbook-designer)
+- [App Host Commands](#app-host-commands)
 ### Copy/Paste in SkyTap Terminal
 
 * Copy:
@@ -51,6 +52,7 @@
   ```
   CTRL + V
   ```
+
 ### Restart SOAR Service
 ```
 sudo systemctl restart resilient
@@ -74,7 +76,7 @@ sudo tail -f /usr/share/co3/logs/client.log
   ```
 
   > **NOTE** this key mapping worked on MacOS, this may be different on your OS...
-### AppHost Commands
+### App Host Commands
 
 * Get Deployments:
   ```
