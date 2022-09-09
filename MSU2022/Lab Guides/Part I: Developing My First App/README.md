@@ -1,4 +1,4 @@
-# IBM **Security** QRadar SOAR: Developing My First App
+# IBM **Security** QRadar SOAR: Developing My First App <!-- omit in toc -->
 
 ![screenshot](./screenshots/logo.png)
 
@@ -6,13 +6,29 @@
 
 ---
 
-<!-- TODO:TOC -->
+## Contents <!-- omit in toc -->
+
+- [Step 0: *Sign up for SkyTap Account:*](#step-0-sign-up-for-skytap-account)
+- [Step 1: *Login to Virtual Environment*](#step-1-login-to-virtual-environment)
+- [Step 2: *VS Code IDE Setup*](#step-2-vs-code-ide-setup)
+- [Step 3: *`resilient-circuits` Configuration*](#step-3-resilient-circuits-configuration)
+- [Step 4: *Create Message Destination in SOAR*](#step-4-create-message-destination-in-soar)
+- [Step 5: *Create Functions for `fn_my_ldap`*](#step-5-create-functions-for-fn_my_ldap)
+- [Step 6: *Create a custom Datatable*](#step-6-create-a-custom-datatable)
+- [Step 7: *Create the Function Package in Code*](#step-7-create-the-function-package-in-code)
+- [Step 8: *Fill in the Code for the Function and Utility Files*](#step-8-fill-in-the-code-for-the-function-and-utility-files)
+- [Step 9: *Create a Playbook to Test*](#step-9-create-a-playbook-to-test)
+- [Step 10: *Start `resilient-circuits` Server*](#step-10-start-resilient-circuits-server)
+- [Step 11: *Test*](#step-11-test)
+- [Step 12: *Debug `resilient-circuits` server*](#step-12-debug-resilient-circuits-server)
+- [Step 13: *Package*](#step-13-package)
+- [Step 14: *Push to local registry*](#step-14-push-to-local-registry)
+- [Step 15: *Install with App Host*](#step-15-install-with-app-host)
 
 ---
 
 ## Step 0: *Sign up for SkyTap Account:*
 
-<!-- TODO! -->
 * Go to  https://ibm.biz/MSU22SkyTap
 
 * Sign in with email and password provided by course provider
@@ -296,50 +312,101 @@
     ![circuits_logs](./screenshots/49.png)
 * Refresh the artifacts tab, and you should see the following in the datatable:
     ![dt_results](./screenshots/50.png)
+* To test the other path where a note is posted when the email is not found, enter a new artifact with a random value for the email recipient and run the playbook again. Notice that nothing is added to the datatable and a note is added to the incident.
 
 ---
 
 ## Step 12: *Debug `resilient-circuits` server*
 
-TODO
+* Stop `resilient-circuits` (`CTRL + C`).
+* On the left of the VS Code panel, select "Run + Debug". Then click "create a launch.json file" and select "Python" from the list of debuggers:
+    ![run_debug](./screenshots/51.png)
+* Select "Python File":
+    ![python](./screenshots/52.png)
+* In the newly created `launch.json` file, enter the details as seen in the screenshot below:
+    ![python](./screenshots/53.png)
+    > The program path is found by running `pip show resilient-circuits` and taking the location value and appendeding `resilient_circuits/bin/resilient_circuits_cmd.py`.
+
+    > Be sure to add the `args` section to the launch file.
+* In the Debug pannel, click the Play button:
+    ![play](./screenshots/54.png)
+    This launches the program as defined in the `launch.json` file and starts circuits with loglevel DEBUG in a new interactive terminal.
+* Open a function and set a breakpoint:
+    ![breakpoint](./screenshots/55.png)
+* From the UI, run the playbook and notice that the breakpoint is hit. You can now step around in the function and see session variables.
+* Feel free to play around with this, it can be a very powerful functionality.
 
 ---
 
 ## Step 13: *Package*
 
-TODO
+* Next we'll package the app for distribution.
+* Before packaging, make sure to reload the package just in case there have been changes in the UI that haven't been captured yet:
+    ```
+    resilient-sdk codegen --reload -p .
+    ```
+* Run the package command, skipping payload samples and specifying a custom repository name (this is optional; the default value is `ibmresilient`):
+    ```
+    resilient-sdk package -p . --no-samples --repository-name my_msu_repo
+    ```
+    ![package](./screenshots/56.png)
+* Notice now that a `dist` directory has been created with a file called `fn_my_ldap/dist/app-fn_my_ldap-1.0.0.zip`. This is what we will use to install the app in step 15.
 
 ---
 
 ## Step 14: *Push to local registry*
 
-TODO
+* Before we can install the app with App Host, we need to ensure that the container image exists in a place where our App Host can pull it down.
+* Back in step 1, we started up the local registry running in podman. We'll use that to host our container image. Other public and private repositories are available and can be used as long as the App Host machine can reach them!
+* Use podman (docker would work, it just isn't available on this specific system) to build and tag the image for our repository
+    ```
+    sudo podman build . -t localhost:5000/my_msu_repo/fn_my_ldap:1.0.0
+    ```
+    ![podman_build](./screenshots/57.png)
+    > Note: the image repository name must match the value given in the `resilient-sdk package` command. In this case, we've used `my_msu_repo` but any value is ok as long as it matches the `--repository-name` flag value in the `package` command. The default if no value is given to `package` is `ibmresilient`.
+* Push the newly build container to the local registry:
+    ```
+    sudo podman push localhost:5000/my_msu_repo/fn_my_ldap:1.0.0
+    ```
+    ![podman_push](./screenshots/58.png)
 
 ---
 
 ## Step 15: *Install with App Host*
 
-TODO
+* Switch back to the SOAR UI. Navigate to the **Apps** tab of the **Administrator Settings**.
+    ![apps](./screenshots/59.png)
+* Install your app by clicking **Install** and finding the `fn_my_ldap/dist/app-fn_my_ldap-1.0.0.zip` file on your local machine.
+    ![upload](./screenshots/60.png)
+    Click **Open**, followed by **Upload File**.
+* Click **Next**:
+    ![next](./screenshots/61.png)
+* Click **Install**:
+    ![install](./screenshots/62.png)
+    ![install_success](./screenshots/63.png)
+* Navigate to the `app.config` file in the **Configuration Tab** of the app:
+    ![configuration](./screenshots/64.png)
+* Enter the same details that we entered locally. Once entered, select the app host that points to the local repo and click **Test Configuration**:
+    ![app_config_on_app_host](./screenshots/65.png)
+    ![save_and_push](./screenshots/66.png)
+* Scroll up and click **Save and Push Changes**:
+    ![save_and_push](./screenshots/67.png)
+* Navigate back to the **Details** tab for the app, scroll down, and click **Deploy**:
+    ![save_and_push](./screenshots/68.png)
+* Once the app is deployed, you can now run it's functions and playbooks.
+    ![success](./screenshots/69.png)
+
+* To view the logs from app host, open a new terminal (in a production environment you'd have to ssh in to the App Host machine). Run the following `kubectl` command to get the pods that are deployed:
+    ```
+    sudo kubectl get po -L app.kubernetes.io/instance -A
+    ```
+    Note the conatiner ID and namespace ID for the pod of your app.
+    ![get_po](./screenshots/70.png)
+* Launch the logs in `follow` mode:
+    ```
+    sudo kubectl logs -f <POD_ID> -n <NAMESPACE_ID>
+    ```
+    ![logs_f](./screenshots/71.png)
 
 ---
 
-
-
-1. Stop `circuits` and setup debug configuration
-1. Start `circuits` using the debug config, and set a breakpoint in `funct_my_ldap_search.py`
-
-1. Once that's all done, we want to do a final `codegen --reload` then we can run `resilient-sdk package -p . --no-samples --respository-name my_msu_repo`
-
-    TODO [Details on the repo name and no samples...]
-
-1. Then we can do a 
-    ```
-    sudo podman build . -t localhost:5000/my_msu_repo/fn_my_ldap:1.0.0
-    ```
-
-    This will build the docker container image, with a tag that points to our local repository which we can then push to:
-    ```
-    sudo podman push localhost:5000/my_msu_repo/fn_my_ldap:1.0.0
-    ```
-
-1. Now we use the file located in `fn_my_ldap/dist/app-fn_my_ldap-1.0.0.zip` and upload through the UI. Configure the app and save the changes. 
