@@ -14,16 +14,13 @@
 - [Step 4: *Create an Incident and Upload Malware Report*](#step-4-create-an-incident-and-upload-malware-report)
 - [Step 5: *Create Playbook to check Devices that executed the Hash*](#step-5-create-playbook-to-check-devices-that-executed-the-hash)
 - [Step 6: *Import the Data Table into the Artifacts Tab*](#step-6-import-the-data-table-into-the-artifacts-tab)
-- [Step 7: *Add the LDAP Details Data Table to Artifacts tab*](#step-7-add-the-ldap-details-data-table-to-artifacts-tab)
-- [Step 8: *Use Created Playbook to Lookup Users in LDAP*](#step-8-use-created-playbook-to-lookup-users-in-ldap)
-- [Step 9: *Use Created Playbook to Disable Users in LDAP*](#step-9-use-created-playbook-to-disable-users-in-ldap)
-- [Step 10: *Modify Playbook to Automatically Contain Device*](#step-10-modify-playbook-to-automatically-contain-device)
-- [Step 11: *Create Playbook for New Report Incident Type*](#step-11-create-playbook-for-new-report-incident-type)
-- [Step 12: *Modify the Parse Attachment Playbook to Close the Task*](#step-12-modify-the-parse-attachment-playbook-to-close-the-task)
-- [Step 13: *Modify the Find Devices Playbook to also handle Tasks*](#step-13-modify-the-find-devices-playbook-to-also-handle-tasks)
-- [Step 14: *Test New Report Incident*](#step-14-test-new-report-incident)
-- [Step 15: *Use SDK to convert Parse Attachment Playbook to be Activated Automatically*](#step-15-use-sdk-to-convert-parse-attachment-playbook-to-be-activated-automatically)
-- [Step 16: *End to End Test*](#step-16-end-to-end-test)
+- [Step 7: *Modify Playbook to Automatically Contain Device*](#step-7-modify-playbook-to-automatically-contain-device)
+- [Step 8: *Create Playbook for New Report Incident Type*](#step-8-create-playbook-for-new-report-incident-type)
+- [Step 9: *Modify the Parse Attachment Playbook to Close the Task*](#step-9-modify-the-parse-attachment-playbook-to-close-the-task)
+- [Step 10: *Modify the Find Devices Playbook to also handle Tasks*](#step-10-modify-the-find-devices-playbook-to-also-handle-tasks)
+- [Step 11: *Test New Report Incident*](#step-11-test-new-report-incident)
+- [Step 12: *Use SDK to convert Parse Attachment Playbook to be Activated Automatically*](#step-12-use-sdk-to-convert-parse-attachment-playbook-to-be-activated-automatically)
+- [Step 13: *End to End Test*](#step-13-end-to-end-test)
 
 ---
 
@@ -331,22 +328,8 @@
   ![screenshot](./screenshots/33.png)
 
 ---
-## Step 7: *Add the LDAP Details Data Table to Artifacts tab*
-* TODO
 
----
-
-## Step 8: *Use Created Playbook to Lookup Users in LDAP*
-* TODO
-
----
-
-## Step 9: *Use Created Playbook to Disable Users in LDAP*
-* TODO
-
----
-
-## Step 10: *Modify Playbook to Automatically Contain Device*
+## Step 7: *Modify Playbook to Automatically Contain Device*
 
 * Open the **Playbook Designer**
 * Open the `Find Devices Executed On` Playbook
@@ -482,7 +465,7 @@
 
 ---
 
-## Step 11: *Create Playbook for New Report Incident Type*
+## Step 8: *Create Playbook for New Report Incident Type*
 * Open the **Playbook Designer**
 * Click **Create Playbook** and enter details:
   * Name: `Handle New Report`
@@ -506,7 +489,7 @@
 
 * Add an **End point**, **Save** and **Enable** the Playbook
 
-## Step 12: *Modify the Parse Attachment Playbook to Close the Task*
+## Step 9: *Modify the Parse Attachment Playbook to Close the Task*
 * Open the **Playbook Designer** and open the `Parse Attachment` Playbook
 * Find the `Task Utils: Close Task` Function and add it to the **canvas**:
 
@@ -527,7 +510,7 @@
 
 ---
 
-## Step 13: *Modify the Find Devices Playbook to also handle Tasks*
+## Step 10: *Modify the Find Devices Playbook to also handle Tasks*
 * Open the **Playbook Designer** and open the `Find Devices Executed On` Playbook
 * Open **Tasks** from the side panel and add the task `EDR: Get Devices IOC Ran On` to the **canvas**, found under the **Detect/Analyze** phase:
 
@@ -586,7 +569,7 @@
 
 ---
 
-## Step 14: *Test New Report Incident*
+## Step 11: *Test New Report Incident*
 * Create a new **Incident**
 * Add the **type**: `New Report`:
 
@@ -604,7 +587,7 @@
 
 ---
 
-## Step 15: *Use SDK to convert Parse Attachment Playbook to be Activated Automatically*
+## Step 12: *Use SDK to convert Parse Attachment Playbook to be Activated Automatically*
 
 * Open the **Playbook Designer** and open the `Parse Attachment` Playbook
 * Click the **View details** icon and scroll down and make note of the API Name of the Playbook:
@@ -643,7 +626,7 @@
 
 ---
 
-## Step 16: *End to End Test*
+## Step 13: *End to End Test*
 * Create a new **Incident**
 * Add the **type**: `New Report`:
 

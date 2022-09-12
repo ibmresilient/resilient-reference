@@ -2,7 +2,7 @@
 
 ![screenshot](./logo.png)
 
-***Shane Curtin & Bo Bleckel, App Engineers, IBM **Security** QRadar SOAR***
+***Bo Bleckel & Shane Curtin, App Engineers, IBM **Security** QRadar SOAR***
 
 ---
 
