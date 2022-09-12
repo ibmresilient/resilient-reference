@@ -44,20 +44,20 @@
 
 * Open **FireFox** and log into **IBM Security QRadar SOAR**.
 
-* Restart the `ldap` and `registry` podman conatiners:
+* Open a new Terminal and restart the `ldap` and `registry` podman conatiners:
     
-    List all podman processes:
-    ```
-    sudo podman ps -a
-    ```
+    * List all podman processes:
+        ```
+        sudo podman ps -a
+        ```
 
-    From the output of the above command, start those containers:
-    ```
-    sudo podamn start <CONATINER_ID_1> <CONTAINER_ID_2>
-    ```
+    * From the output of the above command, start those containers:
+        ```
+        sudo podamn start <CONATINER_ID_1> <CONTAINER_ID_2>
+        ```
 
-    ![podman_start](./screenshots/13.png)
-    > More info on the LDAP container can be found [here](https://github.com/rroemhild/docker-test-openldap)
+        ![podman_start](./screenshots/13.png)
+        > More info on the LDAP container used in this lab can be found [here](https://github.com/rroemhild/docker-test-openldap)
 
 ---
 
@@ -71,6 +71,9 @@
     ![pip_list](./screenshots/4.png)
 
     > *Note that you can use a later version of Python. As of publication of this lab, IBM Security QRadar SOAR officially supports 3.6 and 3.9 for app development.*
+
+    > If you don't see the required resilient packages or the versions are out of date, run `pip install -U resilient-circuits resilient-sdk` to install/upgrade the packages. Note that `resilient` and `resilient-lib` are packaged with `resilient-circuits` and don't need to be explicitly installed.
+
 ---
 
 ## Step 3: *`resilient-circuits` Configuration*
