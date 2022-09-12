@@ -21,9 +21,10 @@
 - [Step 10: *Start `resilient-circuits` Server*](#step-10-start-resilient-circuits-server)
 - [Step 11: *Test*](#step-11-test)
 - [Step 12: *Debug `resilient-circuits` server*](#step-12-debug-resilient-circuits-server)
-- [Step 13: *Package*](#step-13-package)
-- [Step 14: *Push to local registry*](#step-14-push-to-local-registry)
-- [Step 15: *Install with App Host*](#step-15-install-with-app-host)
+- [Step 13: *Validate*](#step-13-validate)
+- [Step 14: *Package*](#step-14-package)
+- [Step 15: *Push to local registry*](#step-15-push-to-local-registry)
+- [Step 16: *Install with App Host*](#step-16-install-with-app-host)
 
 ---
 
@@ -338,7 +339,28 @@
 
 ---
 
-## Step 13: *Package*
+## Step 13: *Validate*
+
+* The SDK has the capability to validate the work that you've done. It will statically check as well as dynamically check your code for potential missing values, security vulnerabilities, and more. The validate tool can also run selftest and verify your local configuration details.
+* We'll run the validate tool for our app (static validation only by passing the `--validate` flag):
+    ```
+    resilient-sdk validate -p . --validate
+    ```
+* This should fail as we haven't had the time to fill out all of the details.
+    ![validate_fail](./screenshots/72.png)
+* When developing your own custom apps, if you don't have a passing validation report, your submission to our App Exchange will be automatically rejected.
+* The other options available for validate are
+    * `--tests`, `--pylint`, `--bandit`, `--selftest`
+    * If you run the SDK in verbose mode, you will see the output of the passing validations:
+        ```
+        resilient-sdk -v validate -p .
+        ```
+    * Run `resilient-sdk validate -h` for more details.
+* The validation tool outputs the report of the run to the terminal, but also includes the report in a markdown format in a file located at `fn_my_ldap/dist/validate_report.md`
+
+---
+
+## Step 14: *Package*
 
 * Next we'll package the app for distribution.
 * Before packaging, make sure to reload the package just in case there have been changes in the UI that haven't been captured yet:
@@ -354,7 +376,7 @@
 
 ---
 
-## Step 14: *Push to local registry*
+## Step 15: *Push to local registry*
 
 * Before we can install the app with App Host, we need to ensure that the container image exists in a place where our App Host can pull it down.
 * Back in step 1, we started up the local registry running in podman. We'll use that to host our container image. Other public and private repositories are available and can be used as long as the App Host machine can reach them!
@@ -372,7 +394,7 @@
 
 ---
 
-## Step 15: *Install with App Host*
+## Step 16: *Install with App Host*
 
 * Switch back to the SOAR UI. Navigate to the **Apps** tab of the **Administrator Settings**.
     ![apps](./screenshots/59.png)
