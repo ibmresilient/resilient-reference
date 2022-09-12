@@ -7,7 +7,7 @@
 ---
 
 ## Lab Guides
- 1. [Part I: Developing My First App](Lab%20Guides/Part%20I:%20Developing%20My%20First%20App/README.md)
+ 1. [Part I: Building Custom Integrations With the App Host](Lab%20Guides/Part%20I:%20Building%20Custom%20Integrations%20With%20the%20App%20Host/README.md)
  2. [Part II: Advanced Development of Playbooks](Lab%20Guides/Part%20II:%20Advanced%20Development%20of%20Playbooks/README.md)
 
 ---
@@ -23,12 +23,16 @@
 * Click [here](./Custom%20Apps/) to access some custom app.zips that are used
 
 ## Tips
-- [Copy/Paste in SkyTap Terminal](#copypaste-in-skytap-terminal)
-- [Copy/Paste in SkyTap FireFox Browser](#copypaste-in-skytap-firefox-browser)
-- [Restart SOAR Service](#restart-soar-service)
-- [View SOAR Logs](#view-soar-logs)
-- [Playbook Designer](#playbook-designer)
-- [App Host Commands](#app-host-commands)
+- [Lab Guides](#lab-guides)
+- [Lab Assets](#lab-assets)
+- [Custom Apps](#custom-apps)
+- [Tips](#tips)
+  - [Copy/Paste in SkyTap Terminal](#copypaste-in-skytap-terminal)
+  - [Copy/Paste in SkyTap FireFox Browser](#copypaste-in-skytap-firefox-browser)
+  - [Restart SOAR Service](#restart-soar-service)
+  - [View SOAR Logs](#view-soar-logs)
+  - [Playbook Designer](#playbook-designer)
+  - [App Host Commands](#app-host-commands)
 ### Copy/Paste in SkyTap Terminal
 
 * Copy:

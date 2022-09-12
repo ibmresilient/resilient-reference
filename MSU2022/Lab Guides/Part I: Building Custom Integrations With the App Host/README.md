@@ -1,4 +1,4 @@
-# IBM **Security** QRadar SOAR: Developing My First App <!-- omit in toc -->
+# IBM **Security** QRadar SOAR: Building Custom Integrations with the App Host <!-- omit in toc -->
 
 ![screenshot](./screenshots/logo.png)
 
@@ -8,7 +8,7 @@
 
 ## Contents <!-- omit in toc -->
 
-- [Step 0: *Sign up for SkyTap Account:*](#step-0-sign-up-for-skytap-account)
+- [Step 0: *Sign up for SkyTap Account*](#step-0-sign-up-for-skytap-account)
 - [Step 1: *Login to Virtual Environment*](#step-1-login-to-virtual-environment)
 - [Step 2: *VS Code IDE Setup*](#step-2-vs-code-ide-setup)
 - [Step 3: *`resilient-circuits` Configuration*](#step-3-resilient-circuits-configuration)
@@ -20,7 +20,7 @@
 - [Step 9: *Create a Playbook to Test*](#step-9-create-a-playbook-to-test)
 - [Step 10: *Start `resilient-circuits` Server*](#step-10-start-resilient-circuits-server)
 - [Step 11: *Test*](#step-11-test)
-- [Step 12: *Debug `resilient-circuits` server*](#step-12-debug-resilient-circuits-server)
+- [Step 12: *Debug `resilient-circuits` Server*](#step-12-debug-resilient-circuits-server)
 - [Step 13: *Validate*](#step-13-validate)
 - [Step 14: *Package*](#step-14-package)
 - [Step 15: *Push to local registry*](#step-15-push-to-local-registry)
@@ -28,7 +28,7 @@
 
 ---
 
-## Step 0: *Sign up for SkyTap Account:*
+## Step 0: *Sign up for SkyTap Account*
 
 * Go to  https://ibm.biz/MSU22SkyTap
 
@@ -320,7 +320,7 @@
 
 ---
 
-## Step 12: *Debug `resilient-circuits` server*
+## Step 12: *Debug `resilient-circuits` Server*
 
 * Stop `resilient-circuits` (`CTRL + C`).
 * On the left of the VS Code panel, select "Run + Debug". Then click "create a launch.json file" and select "Python" from the list of debuggers:
