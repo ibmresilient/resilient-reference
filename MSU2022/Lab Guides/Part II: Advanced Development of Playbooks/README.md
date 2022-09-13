@@ -588,6 +588,11 @@
 
 ## Step 12: *Use SDK to convert Parse Attachment Playbook to be Activated Automatically*
 
+> **If did not attend Part I**, we need to create an `app.config` file for the `resilient-sdk`. To do so, run the following and create an API Key (ask instructor for help):
+> ```
+> echo "[resilient]\nhost=10.0.0.1\norg=Test Organization\napi_key_id=<id>\napi_key_secret=<secret>\ncafile=false" > ~/.resilient/app.config
+> ```
+
 * Open the **Playbook Designer** and open the `Parse Attachment` Playbook
 * Click the **View details** icon and scroll down and make note of the API Name of the Playbook:
 
