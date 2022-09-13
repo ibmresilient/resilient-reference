@@ -26,10 +26,10 @@
 
 ## Step 0: *Sign up for SkyTap Account:*
 
-<!-- TODO! -->
-* Go to  https://ibm.biz/MSU22SkyTap
+* Go to  https://ibm.biz/MSU22SkyTap + `_<your_number>`
+    * Example: I'll use https://ibm.biz/MSU22SkyTap_01
 
-* Sign in with email and password provided by course provider
+* Sign in with password provided by course provider
 
 ---
 
@@ -56,7 +56,6 @@
   * `fn_task_utils`
   * `SOAR LDAP Utilities`
   * `Demo EDR App`
-  * TODO: Custom LDAP App?
 
   ![screenshot](./screenshots/69.png)
 
