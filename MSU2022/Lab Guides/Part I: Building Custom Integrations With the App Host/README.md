@@ -182,7 +182,7 @@
 
 * Copy in the values from the linked files below into their corresponding files in your package:
     * [fn_my_ldap/components/funct_my_ldap_search.py](./python_assets/funct_my_ldap_search.py)
-    * [fn_my_ldap/components/funct_my_ldap_toggle_user_access.py](./python_assets/funct_my_ldap_toggle_user_access.py)
+    * [fn_my_ldap/components/funct_my_ldap_toggle_access.py](./python_assets/funct_my_ldap_toggle_access.py)
     * [fn_my_ldap/util/config.py](./python_assets/config.py)
     * [fn_my_ldap/util/selftest.py](./python_assets/selftest.py)
     * [fn_my_ldap/setup.py](./python_assets/setup.py)
