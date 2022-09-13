@@ -30,7 +30,8 @@
 
 ## Step 0: *Sign up for SkyTap Account*
 
-* Go to  https://ibm.biz/MSU22SkyTap
+* Go to  https://ibm.biz/MSU22SkyTap + `_<your_number>`
+    * Example: I'll use https://ibm.biz/MSU22SkyTap_01
 
 * Sign in with email and password provided by course provider
 
