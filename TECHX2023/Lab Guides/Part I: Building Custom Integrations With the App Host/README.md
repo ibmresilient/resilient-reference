@@ -1,16 +1,13 @@
-# IBM **Security** QRadar SOAR: Building Custom Integrations with the App Host <!-- omit in toc -->
+# Building Custom Integrations on IBM SOAR: A Deep Dive into App Host <!-- omit in toc -->
 
 ![screenshot](./screenshots/logo.png)
 
-***Bo Bleckel App Engineer, IBM **Security** QRadar SOAR***
-
-See the live version of this document at https://github.com/ibmresilient/resilient-reference/blob/TECHX2023/TECHX2023/Lab%20Guides/Part%20I:%20Building%20Custom%20Integrations%20With%20the%20App%20Host/README.md
+***Bo Bleckel: App Engineer, IBM **Security** QRadar SOAR***
 
 ---
 
 ## Contents <!-- omit in toc -->
 
-- [Step 0: *Sign up for SkyTap Account*](#step-0-sign-up-for-skytap-account)
 - [Step 1: *Login to Virtual Environment*](#step-1-login-to-virtual-environment)
 - [Step 2: *VS Code IDE Setup*](#step-2-vs-code-ide-setup)
 - [Step 3: *`resilient-circuits` Configuration*](#step-3-resilient-circuits-configuration)
@@ -27,15 +24,6 @@ See the live version of this document at https://github.com/ibmresilient/resilie
 - [Step 14: *Package*](#step-14-package)
 - [Step 15: *Push to local registry*](#step-15-push-to-local-registry)
 - [Step 16: *Install with App Host*](#step-16-install-with-app-host)
-
----
-
-## Step 0: *Sign up for SkyTap Account*
-
-* Go to  https://ibm.biz/MSU22SkyTap + `_<your_number>`
-    * Example: I'll use https://ibm.biz/MSU22SkyTap_01
-
-* Sign in with email and password provided by course provider
 
 ---
 
@@ -90,14 +78,14 @@ See the live version of this document at https://github.com/ibmresilient/resilie
     code ~/.resilient/app.config
     ```
     ![config_c](./screenshots/5.png)
-* Switch to Firefox and nagvigate to your SOAR host, in this case, 10.0.0.1 or through the bookmark in the bookmark menu. Log in using the saved admin credentials.
+* Switch to Firefox and nagvigate to your SOAR host, in this case, 10.42.0.1 or through the bookmark in the bookmark menu. Log in using the saved admin credentials.
     ![log_in](./screenshots/6.png)
 * Navigate to the **API Keys** section of the **Users** tab in **Administrator Settings** and create a new API Key.
     ![api_settings](./screenshots/7.png)
 * Give the API Key the name "Local Integration Server" and give it all permissions. Click Create.
     ![int_api_key](./screenshots/8.png)
-* IMPORTANT: Before clicking away from the screen that displays the crednetials, copy them to your clipboard. (If you accidentally navigate away from this screen that's ok. You can click into the key and simply regenerate the credentials.)
-* Switch back to VS Code. Here we'll fill in the required values for our `app.config` file, including the copied API Key info, the Organization (in this case `Test Organization`) and the host information.
+* IMPORTANT: Before clicking away from the screen that displays the credentials, copy them to your clipboard. (If you accidentally navigate away from this screen that's ok. You can click into the key and simply regenerate the credentials.)
+* Switch back to VS Code. Here we'll fill in the required values for our `app.config` file, including the copied API Key info, the Organization (in this case `Test Org`) and the host information.
     ![app_config_basics](./screenshots/9.png)
     Scroll down to find the `cafile` setting and set to `False`:
     ![ca_file_false](./screenshots/10.png)
@@ -493,7 +481,7 @@ See the live version of this document at https://github.com/ibmresilient/resilie
     Fill in the following values for the `[fn_my_ldap]` section:
     ```
     [fn_my_ldap]
-    server=10.0.0.1
+    server=10.42.0.1
     port=10389
     admin_user=cn=admin,dc=planetexpress,dc=com
     admin_password=GoodNewsEveryone
