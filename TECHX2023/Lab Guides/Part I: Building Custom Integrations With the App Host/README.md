@@ -58,12 +58,18 @@
     ![open_vs_code](./screenshots/2.png)
 * Create a new terminal
     ![terminal](./screenshots/3.png)
-* Ensure that the python version is 3.6.x and that pip has `resilient-circuits` and `resilient-sdk` installed
+* Ensure that the python version is 3.6.x and that pip has `resilient-circuits` and `resilient-sdk` installed. We'll update these to the latest in the next step
     ![pip_list](./screenshots/4.png)
 
     > *Note that you can use a later version of Python. As of publication of this lab, IBM Security QRadar SOAR officially supports 3.6 and 3.9 for app development.*
 
     > If you don't see the required resilient packages or the versions are out of date, run `pip install -U resilient-circuits resilient-sdk` to install/upgrade the packages. Note that `resilient` and `resilient-lib` are packaged with `resilient-circuits` and don't need to be explicitly installed.
+* Update all the `resilient` Python packages to the latest to ensure we are using all of the newest features (50.0.151 as of publication):
+    ```
+    pip install -U resilient resilient-lib resilient-circuits resilient-sdk
+    ```
+
+    > Note: the version of `resilient` or any of the other Python libraries is NOT DEPENDENT on the version of SOAR. You can use v50.0.151 of resilient with v46.0 of SOAR
 
 ---
 
@@ -85,7 +91,7 @@
 * Give the API Key the name "Local Integration Server" and give it all permissions. Click Create.
     ![int_api_key](./screenshots/8.png)
 * IMPORTANT: Before clicking away from the screen that displays the credentials, copy them to your clipboard. (If you accidentally navigate away from this screen that's ok. You can click into the key and simply regenerate the credentials.)
-* Switch back to VS Code. Here we'll fill in the required values for our `app.config` file, including the copied API Key info, the Organization (in this case `Test Org`) and the host information.
+* Switch back to VS Code. Here we'll fill in the required values for our `app.config` file, including the copied API Key info, the Organization (in this case `Test Org`) and the host information. NOTE: **the host is `10.42.0.1`, not `10.0.0.1` as is in the picture**. The organization name may also have changed from the screenshot, be sure to confirm that against the value in the SOAR UI.
     ![app_config_basics](./screenshots/9.png)
     Scroll down to find the `cafile` setting and set to `False`:
     ![ca_file_false](./screenshots/10.png)
