@@ -4,6 +4,8 @@
 
 ***Bo Bleckel: App Engineer, IBM **Security** QRadar SOAR***
 
+**bo.bleckel@ibm.com**
+
 ---
 
 ## Contents <!-- omit in toc -->
