@@ -618,6 +618,27 @@
     > The program path is found by running `pip show resilient-circuits` and taking the location value and appendeding `resilient_circuits/bin/resilient_circuits_cmd.py`.
 
     > Be sure to add the `args` section to the launch file.
+
+    >
+    ```python
+        {
+            // Use IntelliSense to learn about possible attributes.
+            // Hover to view descriptions of existing attributes.
+            // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+            "configurations": [
+                {
+                    "name": "Python: resilient-circuits",
+                    "type": "python",
+                    "request": "launch",
+                    "program": "/home/resadmin/.local/lib/python3.6/site-packages/resilient_circuits/bin/resilient_circuits_cmd.py",
+                    "args": ["run", "--loglevel=DEBUG"],
+                    "console": "integratedTerminal",
+                    "justMyCode": true
+                }
+            ]
+        }
+    
+    ```
 * In the Debug pannel, click the Play button:
     ![play](./screenshots/54.png)
     This launches the program as defined in the `launch.json` file and starts circuits with loglevel DEBUG in a new interactive terminal.
